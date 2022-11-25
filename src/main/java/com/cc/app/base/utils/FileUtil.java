@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class FileUtil {
     private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
@@ -53,6 +54,30 @@ public class FileUtil {
                 path.delete();
             }
         }
+    }
+
+    public static InputStream getResourcesFileInputStream(String fileName) {
+        return Thread.currentThread().getContextClassLoader().getResourceAsStream("" + fileName);
+    }
+
+    public static String getPath() {
+        return FileUtil.class.getResource("/").getPath();
+    }
+
+    public static File createNewFile(String pathName) {
+        File file = new File(getPath() + pathName);
+        if (file.exists()) {
+            file.delete();
+        } else {
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+        }
+        return file;
+    }
+
+    public static File readFile(String pathName) {
+        return new File(getPath() + pathName);
     }
 
 }

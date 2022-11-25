@@ -50,8 +50,13 @@
     order by b.containerDate desc
   </select>
   <select id="zxgzhtj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-    select a.*
+    select a.*,d.typeName stevedoreName, e.typeName boxTypeName, f.typeName areaName
+    ,(@rownum:=@rownum + 1) xh
     from cec_creatboxtbl a
+    inner join (SELECT @rownum := 0) r
+    left join cec_basictbl d on a.stevedoreID = d.id
+    left join cec_basictbl e on a.boxTypeID = e.id
+    left join cec_basictbl f on a.areaID = f.id
     where 1=1
     and a.corpNo = #{corpNo,jdbcType=VARCHAR}
     <if test="startDate != null and startDate != ''">

@@ -210,7 +210,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <select id="selectByDicNo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-    select litTypeID dicKey,typeName dicVal
+    select id dicKey,typeName dicVal
     from cec_basictbl
     where 1=1
     <if test="dicNo != null and dicNo != ''">
