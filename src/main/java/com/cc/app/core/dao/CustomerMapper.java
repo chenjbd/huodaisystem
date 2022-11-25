@@ -36,4 +36,6 @@ public interface CustomerMapper {
     List<Map<String, Object>> selectByDicNo(Map<String, Object> params);
 
     List comboBox(String unitNo);
+
+    List comboBox2(String unitNo);
 }

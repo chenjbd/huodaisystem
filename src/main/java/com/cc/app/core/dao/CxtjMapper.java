@@ -7,4 +7,10 @@ import java.util.Map;
 public interface CxtjMapper {
 
     Page ckxxcx(Map<String, Object> params);
+
+    Page sjlhtj(Map<String, Object> params);
+
+    Page zxgzhtj(Map<String, Object> params);
+
+    Page jcgstj(Map<String, Object> params);
 }

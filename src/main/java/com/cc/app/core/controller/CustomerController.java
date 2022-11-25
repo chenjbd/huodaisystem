@@ -107,4 +107,9 @@ public class CustomerController {
         return RtnData.ok(customerService.comboBox(user.getUnitNo()));
     }
 
+    @GetMapping("/comboBox2")
+    public Object comboBox2(@CurrentUser LoginUser user){
+        return RtnData.ok(customerService.comboBox2(user.getUnitNo()));
+    }
+
 }

@@ -115,4 +115,8 @@ public class CustomerService {
     public Object comboBox(String unitNo) {
         return customerMapper.comboBox(unitNo);
     }
+
+    public Object comboBox2(String unitNo) {
+        return customerMapper.comboBox2(unitNo);
+    }
 }

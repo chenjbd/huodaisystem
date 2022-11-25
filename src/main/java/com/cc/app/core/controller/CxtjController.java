@@ -42,7 +42,7 @@ public class CxtjController {
      */
     @ApiOperation(value = "查询仓库信息",notes = "查询仓库信息")
     @GetMapping(value = "/ckxxcx")
-    public Object list(@RequestParam(required = false, defaultValue = "20")int pageSize,
+    public Object ckxxcx(@RequestParam(required = false, defaultValue = "20")int pageSize,
                        @RequestParam(required = false, defaultValue = "1") int pageIndex,
                        @CurrentUser LoginUser user,
                        @RequestParam Map<String,Object> params) {
@@ -53,6 +53,48 @@ public class CxtjController {
         }
         PageHelper.startPage(pageIndex, pageSize);
         Page page = mapper.ckxxcx(params);
+        PageInfo pageInfo = page.toPageInfo();
+        PageModel result =  new PageModel(pageInfo);
+        return RtnData.ok(result);
+    }
+
+    @ApiOperation(value = "司机拉货统计",notes = "司机拉货统计")
+    @GetMapping(value = "/sjlhtj")
+    public Object sjlhtj(@RequestParam(required = false, defaultValue = "20")int pageSize,
+                       @RequestParam(required = false, defaultValue = "1") int pageIndex,
+                       @CurrentUser LoginUser user,
+                       @RequestParam Map<String,Object> params) {
+        params.put("corpNo",user.getUnitNo());
+        PageHelper.startPage(pageIndex, pageSize);
+        Page page = mapper.sjlhtj(params);
+        PageInfo pageInfo = page.toPageInfo();
+        PageModel result =  new PageModel(pageInfo);
+        return RtnData.ok(result);
+    }
+
+    @ApiOperation(value = "装卸工装货统计",notes = "装卸工装货统计")
+    @GetMapping(value = "/zxgzhtj")
+    public Object zxgzhtj(@RequestParam(required = false, defaultValue = "20")int pageSize,
+                         @RequestParam(required = false, defaultValue = "1") int pageIndex,
+                         @CurrentUser LoginUser user,
+                         @RequestParam Map<String,Object> params) {
+        params.put("corpNo",user.getUnitNo());
+        PageHelper.startPage(pageIndex, pageSize);
+        Page page = mapper.zxgzhtj(params);
+        PageInfo pageInfo = page.toPageInfo();
+        PageModel result =  new PageModel(pageInfo);
+        return RtnData.ok(result);
+    }
+
+    @ApiOperation(value = "进仓公司统计",notes = "进仓公司统计")
+    @GetMapping(value = "/jcgstj")
+    public Object jcgstj(@RequestParam(required = false, defaultValue = "20")int pageSize,
+                          @RequestParam(required = false, defaultValue = "1") int pageIndex,
+                          @CurrentUser LoginUser user,
+                          @RequestParam Map<String,Object> params) {
+        params.put("corpNo",user.getUnitNo());
+        PageHelper.startPage(pageIndex, pageSize);
+        Page page = mapper.jcgstj(params);
         PageInfo pageInfo = page.toPageInfo();
         PageModel result =  new PageModel(pageInfo);
         return RtnData.ok(result);

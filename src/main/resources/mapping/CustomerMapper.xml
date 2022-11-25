@@ -288,4 +288,9 @@
     where 1=1
       and corpNo = #{corpNo,jdbcType=VARCHAR}
   </select>
+  <select id="comboBox2" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select id dicKey, concat(customerName,'-',customerIndex) dicVal from cec_customertbl
+    where 1=1
+      and corpNo = #{corpNo,jdbcType=VARCHAR}
+  </select>
 </mapper>

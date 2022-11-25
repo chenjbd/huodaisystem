@@ -26,4 +26,66 @@
     </if>
     order by a.date desc
   </select>
+  <select id="sjlhtj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*,b.*,c.customerName,d.driverName from
+    cec_inboundtbl a
+    inner join
+    (select t1.inBoundIndex inId,
+            t2.billofladingNo,t2.sealNum,t2.containerNo,t2.containerDate,t2.areaID
+    from cec_containertbl t1, cec_creatboxtbl t2
+    where 1=1 and t1.sealNum = t2.id) b on a.id = b.inId
+    left join cec_customertbl c on a.customerID = c.id
+    left join cec_drivertbl d on a.driverID = d.id
+    where 1=1
+    and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+    <if test="startDate != null and startDate != ''">
+      and b.containerDate &gt;= #{startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and b.containerDate &lt;= #{endDate,jdbcType=VARCHAR}
+    </if>
+    <if test="driverID != null and driverID != ''">
+      and a.driverID = #{driverID,jdbcType=VARCHAR}
+    </if>
+    order by b.containerDate desc
+  </select>
+  <select id="zxgzhtj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*
+    from cec_creatboxtbl a
+    where 1=1
+    and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+    <if test="startDate != null and startDate != ''">
+      and a.containerDate &gt;= #{startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and a.containerDate &lt;= #{endDate,jdbcType=VARCHAR}
+    </if>
+    <if test="stevedoreID != null and stevedoreID != ''">
+      and a.stevedoreID = #{stevedoreID,jdbcType=VARCHAR}
+    </if>
+    <if test="areaID != null and areaID != ''">
+      and a.areaID = #{areaID,jdbcType=VARCHAR}
+    </if>
+    <if test="boxTypeID != null and boxTypeID != ''">
+      and a.boxTypeID = #{boxTypeID,jdbcType=VARCHAR}
+    </if>
+    order by a.containerDate desc
+  </select>
+  <select id="jcgstj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*,c.customerName from
+    cec_inboundtbl a
+    left join cec_customertbl c on a.customerID = c.id
+    where 1=1
+    and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+    <if test="customerID != null and customerID != ''">
+      and a.customerID like #{customerID,jdbcType=VARCHAR}
+    </if>
+    <if test="startDate != null and startDate != ''">
+      and a.date &gt;= #{startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and a.date &lt;= #{endDate,jdbcType=VARCHAR}
+    </if>
+    order by a.date desc
+  </select>
 </mapper>
