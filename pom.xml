@@ -129,6 +129,11 @@
             <artifactId>itext</artifactId>
             <version>2.1.7</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.0-beta1</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
