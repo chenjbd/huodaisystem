@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.pms.dao.AccountInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.pms.model.AccountInfo" >
+    <id column="acc_id" property="accId" jdbcType="VARCHAR" />
+    <result column="acc_name" property="accName" jdbcType="VARCHAR" />
+    <result column="acc_pwd" property="accPwd" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="acc_role" property="accRole" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="lst_time" property="lstTime" jdbcType="DATE" />
+    <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+    <result column="ks" property="ks" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="union_id" property="unionId" jdbcType="VARCHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    acc_id, acc_name, acc_pwd, name, phone, job, remark, acc_role, status, lst_time, 
+    unit_no, ks, addr, email, open_id, union_id, unit_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.pms.model.AccountInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CC_PMS_ACCOUNT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CC_PMS_ACCOUNT_INFO
+    where acc_id = #{accId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CC_PMS_ACCOUNT_INFO
+    where acc_id = #{accId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.pms.model.AccountInfoExample" >
+    delete from CC_PMS_ACCOUNT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.pms.model.AccountInfo" >
+    insert into CC_PMS_ACCOUNT_INFO (acc_id, acc_name, acc_pwd,
+      name, phone, job, remark, 
+      acc_role, status, lst_time, 
+      unit_no, ks, addr, email, 
+      open_id, union_id, unit_name
+      )
+    values (#{accId,jdbcType=VARCHAR}, #{accName,jdbcType=VARCHAR}, #{accPwd,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{accRole,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{lstTime,jdbcType=DATE}, 
+      #{unitNo,jdbcType=VARCHAR}, #{ks,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{openId,jdbcType=VARCHAR}, #{unionId,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.pms.model.AccountInfo" >
+    insert into CC_PMS_ACCOUNT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accId != null" >
+        acc_id,
+      </if>
+      <if test="accName != null" >
+        acc_name,
+      </if>
+      <if test="accPwd != null" >
+        acc_pwd,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="accRole != null" >
+        acc_role,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="lstTime != null" >
+        lst_time,
+      </if>
+      <if test="unitNo != null" >
+        unit_no,
+      </if>
+      <if test="ks != null" >
+        ks,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="unionId != null" >
+        union_id,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accId != null" >
+        #{accId,jdbcType=VARCHAR},
+      </if>
+      <if test="accName != null" >
+        #{accName,jdbcType=VARCHAR},
+      </if>
+      <if test="accPwd != null" >
+        #{accPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accRole != null" >
+        #{accRole,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="lstTime != null" >
+        #{lstTime,jdbcType=DATE},
+      </if>
+      <if test="unitNo != null" >
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ks != null" >
+        #{ks,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null" >
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.pms.model.AccountInfoExample" resultType="java.lang.Integer" >
+    select count(*) from CC_PMS_ACCOUNT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CC_PMS_ACCOUNT_INFO
+    <set >
+      <if test="record.accId != null" >
+        acc_id = #{record.accId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accName != null" >
+        acc_name = #{record.accName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accPwd != null" >
+        acc_pwd = #{record.accPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.job != null" >
+        job = #{record.job,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accRole != null" >
+        acc_role = #{record.accRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.lstTime != null" >
+        lst_time = #{record.lstTime,jdbcType=DATE},
+      </if>
+      <if test="record.unitNo != null" >
+        unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ks != null" >
+        ks = #{record.ks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionId != null" >
+        union_id = #{record.unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitName != null" >
+        unit_name = #{record.unitName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CC_PMS_ACCOUNT_INFO
+    set acc_id = #{record.accId,jdbcType=VARCHAR},
+      acc_name = #{record.accName,jdbcType=VARCHAR},
+      acc_pwd = #{record.accPwd,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      job = #{record.job,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      acc_role = #{record.accRole,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      lst_time = #{record.lstTime,jdbcType=DATE},
+      unit_no = #{record.unitNo,jdbcType=VARCHAR},
+      ks = #{record.ks,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      union_id = #{record.unionId,jdbcType=VARCHAR},
+      unit_name = #{record.unitName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.pms.model.AccountInfo" >
+    update CC_PMS_ACCOUNT_INFO
+    <set >
+      <if test="accName != null" >
+        acc_name = #{accName,jdbcType=VARCHAR},
+      </if>
+      <if test="accPwd != null" >
+        acc_pwd = #{accPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="accRole != null" >
+        acc_role = #{accRole,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="lstTime != null" >
+        lst_time = #{lstTime,jdbcType=DATE},
+      </if>
+      <if test="unitNo != null" >
+        unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ks != null" >
+        ks = #{ks,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null" >
+        union_id = #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where acc_id = #{accId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.pms.model.AccountInfo" >
+    update CC_PMS_ACCOUNT_INFO
+    set acc_name = #{accName,jdbcType=VARCHAR},
+      acc_pwd = #{accPwd,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      acc_role = #{accRole,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      lst_time = #{lstTime,jdbcType=DATE},
+      unit_no = #{unitNo,jdbcType=VARCHAR},
+      ks = #{ks,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      union_id = #{unionId,jdbcType=VARCHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR}
+    where acc_id = #{accId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryPageList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.* from CC_PMS_ACCOUNT_INFO a
+    where 1=1
+    <if test="accName != null" >
+      and a.ACC_NAME = #{accName,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null and name != ''" >
+      and a.name like #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="unitNo != null and unitNo!=''" >
+      and a.UNIT_NO = #{unitNo,jdbcType=VARCHAR}
+    </if>
+    order by a.LST_TIME
+  </select>
+
+  <select id="selectByAcc" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from CC_PMS_ACCOUNT_INFO
+    where 1=1
+      and ACC_NAME = #{accName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from CC_PMS_ACCOUNT_INFO
+    where 1=1
+      and PHONE = #{phone,jdbcType=VARCHAR}
+  </select>
+</mapper>

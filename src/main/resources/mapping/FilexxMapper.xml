@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.app.core.dao.FilexxMapper">
+  <resultMap id="BaseResultMap" type="com.cc.app.core.model.Filexx">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="FILENAME" jdbcType="VARCHAR" property="filename" />
+    <result column="FILEPATH" jdbcType="VARCHAR" property="filepath" />
+    <result column="FLX" jdbcType="VARCHAR" property="flx" />
+    <result column="FID" jdbcType="VARCHAR" property="fid" />
+    <result column="CLX" jdbcType="VARCHAR" property="clx" />
+    <result column="CMC" jdbcType="VARCHAR" property="cmc" />
+    <result column="CRT_TIME" jdbcType="TIMESTAMP" property="crtTime" />
+    <result column="CRT_OPR" jdbcType="VARCHAR" property="crtOpr" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, FILENAME, FILEPATH, FLX, FID, CLX, CMC, CRT_TIME, CRT_OPR
+  </sql>
+  <select id="selectByExample" parameterType="com.cc.app.core.model.FilexxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CC_FILEXX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CC_FILEXX
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CC_FILEXX
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.core.model.Filexx">
+    insert into CC_FILEXX (ID, FILENAME, FILEPATH, 
+      FLX, FID, CLX, CMC, 
+      CRT_TIME, CRT_OPR)
+    values (#{id,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+      #{flx,jdbcType=VARCHAR}, #{fid,jdbcType=VARCHAR}, #{clx,jdbcType=VARCHAR}, #{cmc,jdbcType=VARCHAR}, 
+      #{crtTime,jdbcType=TIMESTAMP}, #{crtOpr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.core.model.Filexx">
+    insert into CC_FILEXX
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="filename != null">
+        FILENAME,
+      </if>
+      <if test="filepath != null">
+        FILEPATH,
+      </if>
+      <if test="flx != null">
+        FLX,
+      </if>
+      <if test="fid != null">
+        FID,
+      </if>
+      <if test="clx != null">
+        CLX,
+      </if>
+      <if test="cmc != null">
+        CMC,
+      </if>
+      <if test="crtTime != null">
+        CRT_TIME,
+      </if>
+      <if test="crtOpr != null">
+        CRT_OPR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null">
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="flx != null">
+        #{flx,jdbcType=VARCHAR},
+      </if>
+      <if test="fid != null">
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="clx != null">
+        #{clx,jdbcType=VARCHAR},
+      </if>
+      <if test="cmc != null">
+        #{cmc,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTime != null">
+        #{crtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crtOpr != null">
+        #{crtOpr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.core.model.FilexxExample" resultType="java.lang.Integer">
+    select count(*) from CC_FILEXX
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CC_FILEXX
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null">
+        FILENAME = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filepath != null">
+        FILEPATH = #{record.filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flx != null">
+        FLX = #{record.flx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fid != null">
+        FID = #{record.fid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clx != null">
+        CLX = #{record.clx,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmc != null">
+        CMC = #{record.cmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crtTime != null">
+        CRT_TIME = #{record.crtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.crtOpr != null">
+        CRT_OPR = #{record.crtOpr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CC_FILEXX
+    set ID = #{record.id,jdbcType=VARCHAR},
+      FILENAME = #{record.filename,jdbcType=VARCHAR},
+      FILEPATH = #{record.filepath,jdbcType=VARCHAR},
+      FLX = #{record.flx,jdbcType=VARCHAR},
+      FID = #{record.fid,jdbcType=VARCHAR},
+      CLX = #{record.clx,jdbcType=VARCHAR},
+      CMC = #{record.cmc,jdbcType=VARCHAR},
+      CRT_TIME = #{record.crtTime,jdbcType=TIMESTAMP},
+      CRT_OPR = #{record.crtOpr,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.core.model.Filexx">
+    update CC_FILEXX
+    <set>
+      <if test="filename != null">
+        FILENAME = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null">
+        FILEPATH = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="flx != null">
+        FLX = #{flx,jdbcType=VARCHAR},
+      </if>
+      <if test="fid != null">
+        FID = #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="clx != null">
+        CLX = #{clx,jdbcType=VARCHAR},
+      </if>
+      <if test="cmc != null">
+        CMC = #{cmc,jdbcType=VARCHAR},
+      </if>
+      <if test="crtTime != null">
+        CRT_TIME = #{crtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crtOpr != null">
+        CRT_OPR = #{crtOpr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.core.model.Filexx">
+    update CC_FILEXX
+    set FILENAME = #{filename,jdbcType=VARCHAR},
+      FILEPATH = #{filepath,jdbcType=VARCHAR},
+      FLX = #{flx,jdbcType=VARCHAR},
+      FID = #{fid,jdbcType=VARCHAR},
+      CLX = #{clx,jdbcType=VARCHAR},
+      CMC = #{cmc,jdbcType=VARCHAR},
+      CRT_TIME = #{crtTime,jdbcType=TIMESTAMP},
+      CRT_OPR = #{crtOpr,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="queryPageList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select t1.ID, t1.FILENAME,t1.FILEPATH,t1.FID, DATE_FORMAT(t1.CRT_TIME,'%Y-%m-%d %T') UP_TIME ,t2.CUSTOMER_NAME from CC_FILEXX t1, CC_CORE_PERSONAL_INFO t2 where 1=1
+    and t1.CRT_OPR = t2.U_ID
+    <if test="fid!=null and fid!=''">
+        and t1.FID = #{fid,jdbcType=VARCHAR}
+    </if>
+    <if test="flx!=null and flx!=''">
+      and t1.FLX = 'HT'
+    </if>
+    order by t1.CRT_TIME desc
+  </select>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.pms.dao.AccRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.pms.model.AccRole" >
+    <id column="UR_ID" property="urId" jdbcType="VARCHAR" />
+    <result column="ACC_ID" property="accId" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UR_ID, ACC_ID, ROLE_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.pms.model.AccRoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CC_PMS_ACC_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CC_PMS_ACC_ROLE
+    where UR_ID = #{urId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CC_PMS_ACC_ROLE
+    where UR_ID = #{urId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.pms.model.AccRoleExample" >
+    delete from CC_PMS_ACC_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.pms.model.AccRole" >
+    insert into CC_PMS_ACC_ROLE (UR_ID, ACC_ID, ROLE_ID
+      )
+    values (#{urId,jdbcType=VARCHAR}, #{accId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.pms.model.AccRole" >
+    insert into CC_PMS_ACC_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="urId != null" >
+        UR_ID,
+      </if>
+      <if test="accId != null" >
+        ACC_ID,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="urId != null" >
+        #{urId,jdbcType=VARCHAR},
+      </if>
+      <if test="accId != null" >
+        #{accId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.pms.model.AccRoleExample" resultType="java.lang.Integer" >
+    select count(*) from CC_PMS_ACC_ROLE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CC_PMS_ACC_ROLE
+    <set >
+      <if test="record.urId != null" >
+        UR_ID = #{record.urId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accId != null" >
+        ACC_ID = #{record.accId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleId != null" >
+        ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CC_PMS_ACC_ROLE
+    set UR_ID = #{record.urId,jdbcType=VARCHAR},
+      ACC_ID = #{record.accId,jdbcType=VARCHAR},
+      ROLE_ID = #{record.roleId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.pms.model.AccRole" >
+    update CC_PMS_ACC_ROLE
+    <set >
+      <if test="accId != null" >
+        ACC_ID = #{accId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UR_ID = #{urId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.pms.model.AccRole" >
+    update CC_PMS_ACC_ROLE
+    set ACC_ID = #{accId,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=VARCHAR}
+    where UR_ID = #{urId,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteByAccId" parameterType="java.lang.String">
+    delete from CC_PMS_ACC_ROLE
+    where 1=1
+    and ACC_ID = #{accId,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="selectWithAcc" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select a.R_ID "roleId", a.ROLE_NAME "roleName", (case when b.ACC_ID is not null then 1 else 0 end) "checked"
+    from cc_pms_role_info a
+    left join (select * from CC_PMS_ACC_ROLE where 1=1 and ACC_ID = #{accId,jdbcType=VARCHAR}) b on a.R_ID=b.ROLE_ID
+    where 1=1
+    order by a.ROLE_NAME
+  </select>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.core.dao.OrganizationMapper" >
+  <select id="getDeptTreeByPId" resultType="java.util.HashMap" parameterType="map">
+    select t.orgno "id", t.orgname "name", t.super_org "pid",
+    case (select count(1) from cc_pms_org_info a where a.super_org = t.orgno) when 0 then 'false' else 'true' end "isParent"
+    from cc_pms_org_info t
+    where 1=1
+    and t.super_org = #{pid, jdbcType=VARCHAR}
+    order by t.orgno
+  </select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.core.dao.CxtjMapper" >
+  <select id="ckxxcx" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*,b.*,c.customerName,d.driverName from
+    cec_inboundtbl a
+    left join
+    (select t1.inBoundIndex inId,t2.billofladingNo,t2.sealNum,t2.containerNo,t2.containerDate,t2.areaID
+    from cec_containertbl t1, cec_creatboxtbl t2
+    where 1=1 and t1.sealNum = t2.id) b on a.id = b.inId
+    left join cec_customertbl c on a.customerID = c.id
+    left join cec_drivertbl d on a.driverID = d.id
+    where 1=1
+    and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+    <if test="customerName != null and customerName != ''">
+      and c.customerName like #{customerName,jdbcType=VARCHAR}
+    </if>
+    <if test="inboundNo != null and inboundNo != ''">
+      and a.inboundNo = #{inboundNo,jdbcType=VARCHAR}
+    </if>
+    <if test="containerNo != null and containerNo != ''">
+      and b.containerNo = #{containerNo,jdbcType=VARCHAR}
+    </if>
+    <if test="billofladingNo != null and billofladingNo != ''">
+      and b.billofladingNo = #{billofladingNo,jdbcType=VARCHAR}
+    </if>
+    order by a.date desc
+  </select>
+</mapper>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.pms.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.pms.model.UserInfo" >
+    <id column="U_ID" property="uId" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PAPER_NO" property="paperNo" jdbcType="VARCHAR" />
+    <result column="PHONE_NO" property="phoneNo" jdbcType="VARCHAR" />
+    <result column="CORP_LICENSE_NO" property="corpLicenseNo" jdbcType="VARCHAR" />
+    <result column="USER_PWD" property="userPwd" jdbcType="VARCHAR" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="CHAR" />
+    <result column="CRT_TIME" property="crtTime" jdbcType="TIMESTAMP" />
+    <result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+    <result column="UNIT_NO" property="unitNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    U_ID, NAME, PAPER_NO, PHONE_NO, CORP_LICENSE_NO, USER_PWD, USER_STATUS, CRT_TIME, 
+    USER_TYPE, CORP_NAME, UNIT_NO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.pms.model.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CC_PMS_USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CC_PMS_USER_INFO
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CC_PMS_USER_INFO
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.pms.model.UserInfoExample" >
+    delete from CC_PMS_USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.pms.model.UserInfo" >
+    insert into CC_PMS_USER_INFO (U_ID, NAME, PAPER_NO, 
+      PHONE_NO, CORP_LICENSE_NO, USER_PWD, 
+      USER_STATUS, CRT_TIME, USER_TYPE, 
+      CORP_NAME, UNIT_NO)
+    values (#{uId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{paperNo,jdbcType=VARCHAR}, 
+      #{phoneNo,jdbcType=VARCHAR}, #{corpLicenseNo,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
+      #{userStatus,jdbcType=CHAR}, #{crtTime,jdbcType=TIMESTAMP}, #{userType,jdbcType=CHAR}, 
+      #{corpName,jdbcType=VARCHAR}, #{unitNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.pms.model.UserInfo" >
+    insert into CC_PMS_USER_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="paperNo != null" >
+        PAPER_NO,
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO,
+      </if>
+      <if test="corpLicenseNo != null" >
+        CORP_LICENSE_NO,
+      </if>
+      <if test="userPwd != null" >
+        USER_PWD,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+      <if test="crtTime != null" >
+        CRT_TIME,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="corpName != null" >
+        CORP_NAME,
+      </if>
+      <if test="unitNo != null" >
+        UNIT_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uId != null" >
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="paperNo != null" >
+        #{paperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="corpLicenseNo != null" >
+        #{corpLicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="crtTime != null" >
+        #{crtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=CHAR},
+      </if>
+      <if test="corpName != null" >
+        #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.pms.model.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from CC_PMS_USER_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CC_PMS_USER_INFO
+    <set >
+      <if test="record.uId != null" >
+        U_ID = #{record.uId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperNo != null" >
+        PAPER_NO = #{record.paperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNo != null" >
+        PHONE_NO = #{record.phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpLicenseNo != null" >
+        CORP_LICENSE_NO = #{record.corpLicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPwd != null" >
+        USER_PWD = #{record.userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        USER_STATUS = #{record.userStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.crtTime != null" >
+        CRT_TIME = #{record.crtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userType != null" >
+        USER_TYPE = #{record.userType,jdbcType=CHAR},
+      </if>
+      <if test="record.corpName != null" >
+        CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitNo != null" >
+        UNIT_NO = #{record.unitNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CC_PMS_USER_INFO
+    set U_ID = #{record.uId,jdbcType=VARCHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PAPER_NO = #{record.paperNo,jdbcType=VARCHAR},
+      PHONE_NO = #{record.phoneNo,jdbcType=VARCHAR},
+      CORP_LICENSE_NO = #{record.corpLicenseNo,jdbcType=VARCHAR},
+      USER_PWD = #{record.userPwd,jdbcType=VARCHAR},
+      USER_STATUS = #{record.userStatus,jdbcType=CHAR},
+      CRT_TIME = #{record.crtTime,jdbcType=TIMESTAMP},
+      USER_TYPE = #{record.userType,jdbcType=CHAR},
+      CORP_NAME = #{record.corpName,jdbcType=VARCHAR},
+      UNIT_NO = #{record.unitNo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.pms.model.UserInfo" >
+    update CC_PMS_USER_INFO
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="paperNo != null" >
+        PAPER_NO = #{paperNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null" >
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="corpLicenseNo != null" >
+        CORP_LICENSE_NO = #{corpLicenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        USER_PWD = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="crtTime != null" >
+        CRT_TIME = #{crtTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        USER_TYPE = #{userType,jdbcType=CHAR},
+      </if>
+      <if test="corpName != null" >
+        CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        UNIT_NO = #{unitNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.pms.model.UserInfo" >
+    update CC_PMS_USER_INFO
+    set NAME = #{name,jdbcType=VARCHAR},
+      PAPER_NO = #{paperNo,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      CORP_LICENSE_NO = #{corpLicenseNo,jdbcType=VARCHAR},
+      USER_PWD = #{userPwd,jdbcType=VARCHAR},
+      USER_STATUS = #{userStatus,jdbcType=CHAR},
+      CRT_TIME = #{crtTime,jdbcType=TIMESTAMP},
+      USER_TYPE = #{userType,jdbcType=CHAR},
+      CORP_NAME = #{corpName,jdbcType=VARCHAR},
+      UNIT_NO = #{unitNo,jdbcType=VARCHAR}
+    where U_ID = #{uId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByPhoneAndType" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select * from CC_PMS_USER_INFO
+    where 1=1
+    and PHONE_NO = #{pmsoneNo,jdbcType=VARCHAR}
+    and USER_TYPE = #{userType,jdbcType=CHAR}
+  </select>
+
+  <select id="selectByPaperNo" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select * from CC_PMS_USER_INFO
+    where 1=1
+    and PAPER_NO = #{paperNo,jdbcType=VARCHAR}
+    and USER_TYPE = #{userType,jdbcType=CHAR}
+  </select>
+</mapper>

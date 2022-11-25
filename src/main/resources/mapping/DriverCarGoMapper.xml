@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.core.dao.DriverCarGoMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.core.model.DriverCarGo" >
+    <id column="tid" property="tid" jdbcType="VARCHAR" />
+    <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="driverID" property="driverid" jdbcType="VARCHAR" />
+    <result column="customerID" property="customerid" jdbcType="VARCHAR" />
+    <result column="inBoundIndex" property="inboundindex" jdbcType="BIGINT" />
+    <result column="cbm" property="cbm" jdbcType="DECIMAL" />
+    <result column="pks" property="pks" jdbcType="INTEGER" />
+    <result column="shippingMark" property="shippingmark" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="corpNo" property="corpno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    tid, ID, driverID, customerID, inBoundIndex, cbm, pks, shippingMark, remark, corpNo
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.core.model.DriverCarGoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cec_drivercargotbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cec_drivercargotbl
+    where tid = #{tid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cec_drivercargotbl
+    where tid = #{tid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.core.model.DriverCarGoExample" >
+    delete from cec_drivercargotbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.core.model.DriverCarGo" >
+    insert into cec_drivercargotbl (tid, ID, driverID, 
+      customerID, inBoundIndex, cbm, 
+      pks, shippingMark, remark, 
+      corpNo)
+    values (#{tid,jdbcType=VARCHAR}, #{id,jdbcType=BIGINT}, #{driverid,jdbcType=VARCHAR}, 
+      #{customerid,jdbcType=VARCHAR}, #{inboundindex,jdbcType=BIGINT}, #{cbm,jdbcType=DECIMAL}, 
+      #{pks,jdbcType=INTEGER}, #{shippingmark,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{corpno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.core.model.DriverCarGo" >
+    insert into cec_drivercargotbl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="driverid != null" >
+        driverID,
+      </if>
+      <if test="customerid != null" >
+        customerID,
+      </if>
+      <if test="inboundindex != null" >
+        inBoundIndex,
+      </if>
+      <if test="cbm != null" >
+        cbm,
+      </if>
+      <if test="pks != null" >
+        pks,
+      </if>
+      <if test="shippingmark != null" >
+        shippingMark,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="corpno != null" >
+        corpNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        #{tid,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="driverid != null" >
+        #{driverid,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="inboundindex != null" >
+        #{inboundindex,jdbcType=BIGINT},
+      </if>
+      <if test="cbm != null" >
+        #{cbm,jdbcType=DECIMAL},
+      </if>
+      <if test="pks != null" >
+        #{pks,jdbcType=INTEGER},
+      </if>
+      <if test="shippingmark != null" >
+        #{shippingmark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="corpno != null" >
+        #{corpno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.core.model.DriverCarGoExample" resultType="java.lang.Integer" >
+    select count(*) from cec_drivercargotbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cec_drivercargotbl
+    <set >
+      <if test="record.tid != null" >
+        tid = #{record.tid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.driverid != null" >
+        driverID = #{record.driverid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerid != null" >
+        customerID = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inboundindex != null" >
+        inBoundIndex = #{record.inboundindex,jdbcType=BIGINT},
+      </if>
+      <if test="record.cbm != null" >
+        cbm = #{record.cbm,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pks != null" >
+        pks = #{record.pks,jdbcType=INTEGER},
+      </if>
+      <if test="record.shippingmark != null" >
+        shippingMark = #{record.shippingmark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpno != null" >
+        corpNo = #{record.corpno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cec_drivercargotbl
+    set tid = #{record.tid,jdbcType=VARCHAR},
+      ID = #{record.id,jdbcType=BIGINT},
+      driverID = #{record.driverid,jdbcType=VARCHAR},
+      customerID = #{record.customerid,jdbcType=VARCHAR},
+      inBoundIndex = #{record.inboundindex,jdbcType=BIGINT},
+      cbm = #{record.cbm,jdbcType=DECIMAL},
+      pks = #{record.pks,jdbcType=INTEGER},
+      shippingMark = #{record.shippingmark,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      corpNo = #{record.corpno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.core.model.DriverCarGo" >
+    update cec_drivercargotbl
+    <set >
+      <if test="id != null" >
+        ID = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="driverid != null" >
+        driverID = #{driverid,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        customerID = #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="inboundindex != null" >
+        inBoundIndex = #{inboundindex,jdbcType=BIGINT},
+      </if>
+      <if test="cbm != null" >
+        cbm = #{cbm,jdbcType=DECIMAL},
+      </if>
+      <if test="pks != null" >
+        pks = #{pks,jdbcType=INTEGER},
+      </if>
+      <if test="shippingmark != null" >
+        shippingMark = #{shippingmark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="corpno != null" >
+        corpNo = #{corpno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.core.model.DriverCarGo" >
+    update cec_drivercargotbl
+    set ID = #{id,jdbcType=BIGINT},
+      driverID = #{driverid,jdbcType=VARCHAR},
+      customerID = #{customerid,jdbcType=VARCHAR},
+      inBoundIndex = #{inboundindex,jdbcType=BIGINT},
+      cbm = #{cbm,jdbcType=DECIMAL},
+      pks = #{pks,jdbcType=INTEGER},
+      shippingMark = #{shippingmark,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      corpNo = #{corpno,jdbcType=VARCHAR}
+    where tid = #{tid,jdbcType=VARCHAR}
+  </update>
+  <select id="queryPageList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select
+      a.*,b.driverName,c.customerName
+    from cec_drivercargotbl a,cec_drivertbl b,cec_customertbl c
+    where a.corpNo = b.corpNo and a.corpNo=c.corpNo and a.driverID= b.driverID  and a.customerID= c.customerID
+    <if test="driverName != null and driverName != ''">
+      and driverName like #{driverName,jdbcType=VARCHAR}
+    </if>
+    <if test="customerName != null and customerName != ''">
+      and customerName like #{customerName,jdbcType=VARCHAR}
+    </if>
+    <if test="corpNo != null and corpNo != ''">
+      and corpNo = #{corpNo,jdbcType=VARCHAR}
+    </if>
+    order by a.driverID
+  </select>
+</mapper>

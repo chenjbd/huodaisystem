@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.core.dao.BasicDICMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.core.model.BasicDIC" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="bigTypeID" property="bigtypeid" jdbcType="VARCHAR" />
+    <result column="litTypeID" property="littypeid" jdbcType="VARCHAR" />
+    <result column="typeName" property="typename" jdbcType="VARCHAR" />
+    <result column="corpNo" property="corpno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, bigTypeID, litTypeID, typeName, corpNo
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.core.model.BasicDICExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cec_basictbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cec_basictbl
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cec_basictbl
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.core.model.BasicDICExample" >
+    delete from cec_basictbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.core.model.BasicDIC" >
+    insert into cec_basictbl (id, bigTypeID, litTypeID, 
+      typeName, corpNo)
+    values (#{id,jdbcType=VARCHAR}, #{bigtypeid,jdbcType=VARCHAR}, #{littypeid,jdbcType=VARCHAR}, 
+      #{typename,jdbcType=VARCHAR}, #{corpno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.core.model.BasicDIC" >
+    insert into cec_basictbl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bigtypeid != null" >
+        bigTypeID,
+      </if>
+      <if test="littypeid != null" >
+        litTypeID,
+      </if>
+      <if test="typename != null" >
+        typeName,
+      </if>
+      <if test="corpno != null" >
+        corpNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bigtypeid != null" >
+        #{bigtypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="littypeid != null" >
+        #{littypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="typename != null" >
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="corpno != null" >
+        #{corpno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.core.model.BasicDICExample" resultType="java.lang.Integer" >
+    select count(*) from cec_basictbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cec_basictbl
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigtypeid != null" >
+        bigTypeID = #{record.bigtypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.littypeid != null" >
+        litTypeID = #{record.littypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typename != null" >
+        typeName = #{record.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpno != null" >
+        corpNo = #{record.corpno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cec_basictbl
+    set id = #{record.id,jdbcType=VARCHAR},
+      bigTypeID = #{record.bigtypeid,jdbcType=VARCHAR},
+      litTypeID = #{record.littypeid,jdbcType=VARCHAR},
+      typeName = #{record.typename,jdbcType=VARCHAR},
+      corpNo = #{record.corpno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.core.model.BasicDIC" >
+    update cec_basictbl
+    <set >
+      <if test="bigtypeid != null" >
+        bigTypeID = #{bigtypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="littypeid != null" >
+        litTypeID = #{littypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="typename != null" >
+        typeName = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="corpno != null" >
+        corpNo = #{corpno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.core.model.BasicDIC" >
+    update cec_basictbl
+    set bigTypeID = #{bigtypeid,jdbcType=VARCHAR},
+      litTypeID = #{littypeid,jdbcType=VARCHAR},
+      typeName = #{typename,jdbcType=VARCHAR},
+      corpNo = #{corpno,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByDicNo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select litTypeID dicKey,typeName dicVal
+    from cec_basictbl
+    where 1=1
+    <if test="dicNo != null and dicNo != ''">
+      and bigTypeID = #{dicNo,jdbcType=VARCHAR}
+    </if>
+    <if test="corpNo != null and corpNo != ''">
+      and corpNo = #{corpNo,jdbcType=VARCHAR}
+    </if>
+    order by litTypeID
+  </select>
+  <select id="queryPageList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from cec_basictbl
+    where 1=1
+    <if test="typeName != null and typeName != ''">
+      and typeName like #{typeName,jdbcType=VARCHAR}
+    </if>
+    <if test="littypeId != null and littypeId != ''">
+      and littypeId = #{littypeId,jdbcType=VARCHAR}
+    </if>
+    <if test="corpNo != null and corpNo != ''">
+      and corpNo = #{corpNo,jdbcType=VARCHAR}
+    </if>
+    <if test="bigTypeID != null and bigTypeID != ''">
+      and bigTypeID = #{bigTypeID,jdbcType=VARCHAR}
+    </if>
+    order by litTypeID
+  </select>
+  <select id="maxId" parameterType="com.cc.app.core.model.BasicDIC" resultType="java.lang.Integer">
+    select max(litTypeID) + 0 from cec_basictbl
+    where 1=1
+    and corpNo = #{corpno,jdbcType=VARCHAR}
+    and bigTypeID = #{bigtypeid,jdbcType=VARCHAR}
+  </select>
+</mapper>

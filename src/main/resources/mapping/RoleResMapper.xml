@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.pms.dao.RoleResMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.pms.model.RoleRes" >
+    <id column="RR_ID" property="rrId" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR" />
+    <result column="RES_ID" property="resId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RR_ID, ROLE_ID, RES_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.pms.model.RoleResExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CC_PMS_ROLE_RES
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CC_PMS_ROLE_RES
+    where RR_ID = #{rrId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CC_PMS_ROLE_RES
+    where RR_ID = #{rrId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.pms.model.RoleResExample" >
+    delete from CC_PMS_ROLE_RES
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.pms.model.RoleRes" >
+    insert into CC_PMS_ROLE_RES (RR_ID, ROLE_ID, RES_ID
+      )
+    values (#{rrId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{resId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.pms.model.RoleRes" >
+    insert into CC_PMS_ROLE_RES
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rrId != null" >
+        RR_ID,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rrId != null" >
+        #{rrId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        #{resId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.pms.model.RoleResExample" resultType="java.lang.Integer" >
+    select count(*) from CC_PMS_ROLE_RES
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CC_PMS_ROLE_RES
+    <set >
+      <if test="record.rrId != null" >
+        RR_ID = #{record.rrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleId != null" >
+        ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resId != null" >
+        RES_ID = #{record.resId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CC_PMS_ROLE_RES
+    set RR_ID = #{record.rrId,jdbcType=VARCHAR},
+      ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      RES_ID = #{record.resId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.pms.model.RoleRes" >
+    update CC_PMS_ROLE_RES
+    <set >
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="resId != null" >
+        RES_ID = #{resId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RR_ID = #{rrId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.pms.model.RoleRes" >
+    update CC_PMS_ROLE_RES
+    set ROLE_ID = #{roleId,jdbcType=VARCHAR},
+      RES_ID = #{resId,jdbcType=VARCHAR}
+    where RR_ID = #{rrId,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteByRole" parameterType="java.lang.String">
+      delete from CC_PMS_ROLE_RES
+      where 1=1
+      and ROLE_ID = #{rId,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="selectRoleRes" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.RES_NO "resNo",a.RES_ID "id",a.RES_NAME "title",(case when b.ROLE_ID is not null then 1 else 0 end) as "checked", 1 as "spread"
+      from CC_PMS_RES_INFO a
+      left JOIN (select * from CC_PMS_ROLE_RES where ROLE_ID=#{roleId,jdbcType=VARCHAR}) b on a.RES_ID=b.RES_ID
+      where 1=1
+      and a.P_ID = #{pId,jdbcType=VARCHAR}
+      order by a.SEQ
+  </select>
+
+  <select id="selectAccRoleRes" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select t2.P_ID "pId",t2.RES_ID "id",t2.RES_NAME "title",t2.RES_PATH "href",t2.ICON "icon",'_self' as "target",t2.RES_NO "RESNO" from (
+    select distinct c.RES_ID from CC_PMS_ACC_ROLE a, CC_PMS_ROLE_RES b, CC_PMS_RES_INFO c
+    where 1=1
+    and a.ROLE_ID = b.ROLE_ID
+    and b.RES_ID = c.RES_ID
+    and a.ACC_ID = #{accId,jdbcType=VARCHAR}
+    <if test="pId != null" >
+      and  c.P_ID = #{pId,jdbcType=VARCHAR}
+    </if>
+    ) t1, CC_PMS_RES_INFO t2
+    where 1=1
+    and t1.RES_ID = t2.RES_ID
+    order by t2.SEQ
+  </select>
+
+  <select id="selectAccRoleRes2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select t2.* from (
+    select distinct c.RES_ID from CC_PMS_ACC_ROLE a, CC_PMS_ROLE_RES b, CC_PMS_RES_INFO c
+    where 1=1
+    and a.ROLE_ID = b.ROLE_ID
+    and b.RES_ID = c.RES_ID
+    and a.ACC_ID = #{accId,jdbcType=VARCHAR}
+    <if test="pId != null" >
+      and  c.P_ID = #{pId,jdbcType=VARCHAR}
+    </if>
+    ) t1, CC_PMS_RES_INFO t2
+    where 1=1
+    and t1.RES_ID = t2.RES_ID
+    order by t2.SEQ
+  </select>
+
+  <select id="selectAllRes" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select P_ID "pId",RES_ID AS "id",RES_NAME AS "title",RES_PATH AS "href",ICON icon,'_self' as "target", RES_NO as "RESNO"
+    from CC_PMS_RES_INFO
+    where 1=1
+    and APP_ID='sys'
+    and  P_ID = #{pId,jdbcType=VARCHAR}
+    order by SEQ
+  </select>
+
+  <select id="selectAllRes2" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select *
+    from CC_PMS_RES_INFO
+    where 1=1
+    and APP_ID='sys'
+    and  P_ID = #{pId,jdbcType=VARCHAR}
+    order by SEQ
+  </select>
+</mapper>

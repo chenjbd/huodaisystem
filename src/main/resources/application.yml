@@ -1,0 +1,56 @@
+# 服务配置
+server:
+  port: 9000
+
+# Spring相关配置
+spring:
+  application:
+    # 注册应用名
+    name: actdemo
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+
+  ##数据库连接信息
+  datasource:
+    # 数据源配置
+    url: jdbc:mysql://127.0.0.1:3306/vue?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    # SQLException: XAER_INVAL: Invalid arguments (or unsupported command)问题
+    xa:
+      properties:
+        pinGlobalTxToPhysicalConnection: true
+        useServerPrepStmts: true
+
+# 关闭activiti登录验证
+security:
+  basic:
+    enabled: false
+
+
+#mybatis
+mybatis:
+  mapper-locations: classpath*:mapping/*.xml
+
+#pageHelper分页插件
+pagehelper:
+  helper-dialect: mysql #oracle
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+  level:
+    com.cc.app: DEBUG
+
+#签发jwt私钥
+jwt:
+  secret: qwe123asd456zxc789
+
+system:
+  login-expire-time-app: 1 # 手机端登录时间有效期，天数
+  login-expire-time-pc: 4 # PC端登录时间有效期.,小时
+  phone-code-expire-time: 5 # 手机短信验证码有效期，分钟
+  phone-code-interval-time: 60 # 发送短信验证码间隔时间，秒

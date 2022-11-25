@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cc.app.core.dao.CreateBoxMapper" >
+  <resultMap id="BaseResultMap" type="com.cc.app.core.model.CreateBox" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sealNum" property="sealnum" jdbcType="VARCHAR" />
+    <result column="containerNo" property="containerno" jdbcType="VARCHAR" />
+    <result column="boxTypeID" property="boxtypeid" jdbcType="VARCHAR" />
+    <result column="billofladingNo" property="billofladingno" jdbcType="VARCHAR" />
+    <result column="areaID" property="areaid" jdbcType="VARCHAR" />
+    <result column="containerDate" property="containerdate" jdbcType="VARCHAR" />
+    <result column="stevedoreID" property="stevedoreid" jdbcType="VARCHAR" />
+    <result column="cost" property="cost" jdbcType="INTEGER" />
+    <result column="cubicNum" property="cubicnum" jdbcType="DECIMAL" />
+    <result column="statue" property="statue" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="stevedoreNotes" property="stevedorenotes" jdbcType="VARCHAR" />
+    <result column="supervisedCbm" property="supervisedcbm" jdbcType="DECIMAL" />
+    <result column="corpNo" property="corpno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sealNum, containerNo, boxTypeID, billofladingNo, areaID, containerDate, stevedoreID, 
+    cost, cubicNum, statue, notes, stevedoreNotes, supervisedCbm, corpNo
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cc.app.core.model.CreateBoxExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cec_creatboxtbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cec_creatboxtbl
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cec_creatboxtbl
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cc.app.core.model.CreateBoxExample" >
+    delete from cec_creatboxtbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cc.app.core.model.CreateBox" >
+    insert into cec_creatboxtbl (id, sealNum, containerNo, 
+      boxTypeID, billofladingNo, areaID, 
+      containerDate, stevedoreID, cost, 
+      cubicNum, statue, notes, 
+      stevedoreNotes, supervisedCbm, corpNo
+      )
+    values (#{id,jdbcType=VARCHAR}, #{sealnum,jdbcType=VARCHAR}, #{containerno,jdbcType=VARCHAR}, 
+      #{boxtypeid,jdbcType=VARCHAR}, #{billofladingno,jdbcType=VARCHAR}, #{areaid,jdbcType=VARCHAR}, 
+      #{containerdate,jdbcType=VARCHAR}, #{stevedoreid,jdbcType=VARCHAR}, #{cost,jdbcType=INTEGER}, 
+      #{cubicnum,jdbcType=DECIMAL}, #{statue,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR}, 
+      #{stevedorenotes,jdbcType=VARCHAR}, #{supervisedcbm,jdbcType=DECIMAL}, #{corpno,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cc.app.core.model.CreateBox" >
+    insert into cec_creatboxtbl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sealnum != null" >
+        sealNum,
+      </if>
+      <if test="containerno != null" >
+        containerNo,
+      </if>
+      <if test="boxtypeid != null" >
+        boxTypeID,
+      </if>
+      <if test="billofladingno != null" >
+        billofladingNo,
+      </if>
+      <if test="areaid != null" >
+        areaID,
+      </if>
+      <if test="containerdate != null" >
+        containerDate,
+      </if>
+      <if test="stevedoreid != null" >
+        stevedoreID,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="cubicnum != null" >
+        cubicNum,
+      </if>
+      <if test="statue != null" >
+        statue,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="stevedorenotes != null" >
+        stevedoreNotes,
+      </if>
+      <if test="supervisedcbm != null" >
+        supervisedCbm,
+      </if>
+      <if test="corpno != null" >
+        corpNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sealnum != null" >
+        #{sealnum,jdbcType=VARCHAR},
+      </if>
+      <if test="containerno != null" >
+        #{containerno,jdbcType=VARCHAR},
+      </if>
+      <if test="boxtypeid != null" >
+        #{boxtypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="billofladingno != null" >
+        #{billofladingno,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="containerdate != null" >
+        #{containerdate,jdbcType=VARCHAR},
+      </if>
+      <if test="stevedoreid != null" >
+        #{stevedoreid,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=INTEGER},
+      </if>
+      <if test="cubicnum != null" >
+        #{cubicnum,jdbcType=DECIMAL},
+      </if>
+      <if test="statue != null" >
+        #{statue,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="stevedorenotes != null" >
+        #{stevedorenotes,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisedcbm != null" >
+        #{supervisedcbm,jdbcType=DECIMAL},
+      </if>
+      <if test="corpno != null" >
+        #{corpno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cc.app.core.model.CreateBoxExample" resultType="java.lang.Integer" >
+    select count(*) from cec_creatboxtbl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cec_creatboxtbl
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sealnum != null" >
+        sealNum = #{record.sealnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.containerno != null" >
+        containerNo = #{record.containerno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boxtypeid != null" >
+        boxTypeID = #{record.boxtypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billofladingno != null" >
+        billofladingNo = #{record.billofladingno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaid != null" >
+        areaID = #{record.areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.containerdate != null" >
+        containerDate = #{record.containerdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stevedoreid != null" >
+        stevedoreID = #{record.stevedoreid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cost != null" >
+        cost = #{record.cost,jdbcType=INTEGER},
+      </if>
+      <if test="record.cubicnum != null" >
+        cubicNum = #{record.cubicnum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.statue != null" >
+        statue = #{record.statue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notes != null" >
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stevedorenotes != null" >
+        stevedoreNotes = #{record.stevedorenotes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisedcbm != null" >
+        supervisedCbm = #{record.supervisedcbm,jdbcType=DECIMAL},
+      </if>
+      <if test="record.corpno != null" >
+        corpNo = #{record.corpno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cec_creatboxtbl
+    set id = #{record.id,jdbcType=VARCHAR},
+      sealNum = #{record.sealnum,jdbcType=VARCHAR},
+      containerNo = #{record.containerno,jdbcType=VARCHAR},
+      boxTypeID = #{record.boxtypeid,jdbcType=VARCHAR},
+      billofladingNo = #{record.billofladingno,jdbcType=VARCHAR},
+      areaID = #{record.areaid,jdbcType=VARCHAR},
+      containerDate = #{record.containerdate,jdbcType=VARCHAR},
+      stevedoreID = #{record.stevedoreid,jdbcType=VARCHAR},
+      cost = #{record.cost,jdbcType=INTEGER},
+      cubicNum = #{record.cubicnum,jdbcType=DECIMAL},
+      statue = #{record.statue,jdbcType=VARCHAR},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      stevedoreNotes = #{record.stevedorenotes,jdbcType=VARCHAR},
+      supervisedCbm = #{record.supervisedcbm,jdbcType=DECIMAL},
+      corpNo = #{record.corpno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cc.app.core.model.CreateBox" >
+    update cec_creatboxtbl
+    <set >
+      <if test="sealnum != null" >
+        sealNum = #{sealnum,jdbcType=VARCHAR},
+      </if>
+      <if test="containerno != null" >
+        containerNo = #{containerno,jdbcType=VARCHAR},
+      </if>
+      <if test="boxtypeid != null" >
+        boxTypeID = #{boxtypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="billofladingno != null" >
+        billofladingNo = #{billofladingno,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        areaID = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="containerdate != null" >
+        containerDate = #{containerdate,jdbcType=VARCHAR},
+      </if>
+      <if test="stevedoreid != null" >
+        stevedoreID = #{stevedoreid,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=INTEGER},
+      </if>
+      <if test="cubicnum != null" >
+        cubicNum = #{cubicnum,jdbcType=DECIMAL},
+      </if>
+      <if test="statue != null" >
+        statue = #{statue,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="stevedorenotes != null" >
+        stevedoreNotes = #{stevedorenotes,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisedcbm != null" >
+        supervisedCbm = #{supervisedcbm,jdbcType=DECIMAL},
+      </if>
+      <if test="corpno != null" >
+        corpNo = #{corpno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cc.app.core.model.CreateBox" >
+    update cec_creatboxtbl
+    set sealNum = #{sealnum,jdbcType=VARCHAR},
+      containerNo = #{containerno,jdbcType=VARCHAR},
+      boxTypeID = #{boxtypeid,jdbcType=VARCHAR},
+      billofladingNo = #{billofladingno,jdbcType=VARCHAR},
+      areaID = #{areaid,jdbcType=VARCHAR},
+      containerDate = #{containerdate,jdbcType=VARCHAR},
+      stevedoreID = #{stevedoreid,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=INTEGER},
+      cubicNum = #{cubicnum,jdbcType=DECIMAL},
+      statue = #{statue,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      stevedoreNotes = #{stevedorenotes,jdbcType=VARCHAR},
+      supervisedCbm = #{supervisedcbm,jdbcType=DECIMAL},
+      corpNo = #{corpno,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="queryPageList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from cec_creatboxtbl
+    where 1=1
+    <if test="startDate != null and startDate != ''">
+      and containerDate >= #{startDate,jdbcType=VARCHAR}
+    </if>
+    <if test="endDate != null and endDate != ''">
+      and containerDate >= #{endDate,jdbcType=VARCHAR}
+    </if>
+    <if test="containerDate != null and containerDate != ''">
+      and containerDate = #{containerDate,jdbcType=VARCHAR}
+    </if>
+    <if test="statue != null and statue != ''">
+      and statue = #{statue,jdbcType=VARCHAR}
+    </if>
+    <if test="containerNo != null and containerNo != ''">
+      and containerNo = #{containerNo,jdbcType=VARCHAR}
+    </if>
+    <if test="billofladingNo != null and billofladingNo != ''">
+      and billofladingNo = #{billofladingNo,jdbcType=VARCHAR}
+    </if>
+    <if test="areaId != null and areaId != ''">
+      and areaID = #{areaId,jdbcType=VARCHAR}
+    </if>
+    <if test="boxTypeID != null and boxTypeID != ''">
+      and boxTypeID = #{boxTypeID,jdbcType=VARCHAR}
+    </if>
+    <if test="corpNo != null and corpNo != ''">
+      and corpNo = #{corpNo,jdbcType=VARCHAR}
+    </if>
+    order by containerDate desc
+  </select>
+</mapper>
