@@ -99,4 +99,18 @@ public class CxtjController {
         PageModel result =  new PageModel(pageInfo);
         return RtnData.ok(result);
     }
+
+    @ApiOperation(value = "退仓费用统计",notes = "退仓费用统计")
+    @GetMapping(value = "/tcfytj")
+    public Object tjfytj(@RequestParam(required = false, defaultValue = "20")int pageSize,
+                         @RequestParam(required = false, defaultValue = "1") int pageIndex,
+                         @CurrentUser LoginUser user,
+                         @RequestParam Map<String,Object> params) {
+        params.put("corpNo",user.getUnitNo());
+        PageHelper.startPage(pageIndex, pageSize);
+        Page page = mapper.tjfytj(params);
+        PageInfo pageInfo = page.toPageInfo();
+        PageModel result =  new PageModel(pageInfo);
+        return RtnData.ok(result);
+    }
 }
