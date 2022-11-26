@@ -402,4 +402,12 @@
     </if>
     order by containerDate desc
   </select>
+  <select id="getInfo" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select a.*, b.typeName boxTypeName, c.typeName areaName from
+      cec_creatboxtbl a
+        left join cec_basictbl b on a.boxTypeID = b.id
+        left join cec_basictbl c on a.areaID = c.id
+    where 1=1
+      and a.id = #{id,jdbcType=VARCHAR}
+  </select>
 </mapper>

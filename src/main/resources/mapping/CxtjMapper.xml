@@ -117,4 +117,20 @@
     </if>
     order by a.date desc
   </select>
+  <select id="zxqd" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*,c.customerName, d.driverName
+    ,(@rownum:=@rownum + 1) xh
+    from (
+        select t2.*,t1.sealNum boxId from cec_containertbl t1, cec_inboundtbl t2
+        where 1=1
+          and t1.inBoundIndex = t2.id
+          and t1.sealNum = #{boxId,jdbcType=VARCHAR}
+        ) a
+        inner join (SELECT @rownum := 0) r
+        left join cec_customertbl c on a.customerID = c.id
+        left join cec_drivertbl d on a.driverID = d.id
+    where 1=1
+    and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+    order by a.inboundNo
+  </select>
 </mapper>

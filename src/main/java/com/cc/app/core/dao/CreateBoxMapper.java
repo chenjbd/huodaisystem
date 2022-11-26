@@ -32,4 +32,6 @@ public interface CreateBoxMapper {
     int updateByPrimaryKey(CreateBox record);
 
     Page queryPageList(Map<String, Object> params);
+
+    Map<String,Object> getInfo(String id);
 }

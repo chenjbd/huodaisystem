@@ -9,7 +9,9 @@ import com.cc.app.base.common.CurrentUser;
 import com.cc.app.base.common.PageModel;
 import com.cc.app.base.common.RtnData;
 import com.cc.app.base.model.LoginUser;
+import com.cc.app.base.utils.BeanMapUtils;
 import com.cc.app.base.utils.FileUtil;
+import com.cc.app.core.dao.CreateBoxMapper;
 import com.cc.app.core.dao.CxtjMapper;
 import com.cc.app.core.model.CreateBox;
 import com.cc.app.core.service.CreateBoxService;
@@ -156,6 +158,43 @@ public class CxtjController {
         PageInfo pageInfo = page.toPageInfo();
         PageModel result =  new PageModel(pageInfo);
         return RtnData.ok(result);
+    }
+
+    @Autowired
+    private CreateBoxMapper createBoxMapper;
+
+    /**
+     * 装箱清单excel
+     * @param response
+     * @param user
+     * @param params
+     */
+    @PostMapping(value = "/zxqd-excel")
+    public void zxqdExcel(
+            HttpServletResponse response,
+            @CurrentUser LoginUser user,
+            @RequestBody Map<String,Object> params) {
+        params.put("corpNo",user.getUnitNo());
+        Page page = mapper.zxqd(params);
+        try{
+            //设置参数
+            String boxId = (String) params.get("boxId");//箱子
+            Map<String,Object> beanMap = createBoxMapper.getInfo(boxId);//箱子信息
+            BigDecimal cubicNum = (BigDecimal) beanMap.get("cubicNum");
+            BigDecimal supervisedCbm = (BigDecimal) beanMap.get("supervisedCbm");
+            beanMap.put("cubicNum", String.valueOf(cubicNum.setScale(2)));
+            beanMap.put("supervisedCbm", String.valueOf(supervisedCbm.setScale(2)));
+            params.putAll(beanMap);
+
+            //统计结果
+            DoubleSummaryStatistics cbmDoubleSummaryStatistics = page.stream().mapToDouble(item->
+                    ((BigDecimal)((Map)item).get("cbm")).doubleValue()).summaryStatistics();
+
+            params.put("cbmSum", cbmDoubleSummaryStatistics.getSum());
+            this.exportInfo(response, "zxqd", page, params);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+        }
     }
 
     /**
