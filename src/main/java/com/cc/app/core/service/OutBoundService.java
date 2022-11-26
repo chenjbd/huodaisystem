@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -32,6 +34,8 @@ public class OutBoundService {
 
     @Autowired
     private OutBoundMapper outBoundMapper;
+    @Autowired
+    private InBoundMapper inBoundMapper;
 
     @Autowired
     private SeqService seqService;
@@ -53,25 +57,53 @@ public class OutBoundService {
     }
 
     /**
-     * 添加司机信息
+     * 退仓登记
      * @param params
      * @throws Exception
      */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public RtnData insert(Map<String,Object> params) throws Exception{
-        String tid = UUIDGenUtil.uuid();
         String corpNo = (String) params.get("corpNo");
-        String outSeq = seqService.getSeqNo("seq_cec_outboundtbl");
+        String outSeq = seqService.getSeqNo("seq_cec_outboundtbl");//退仓序号
         Long id = Long.parseLong(outSeq);
-        Long inboundIndex= Long.parseLong((String) params.get("inboundIndex"));
+        String tid = corpNo + outSeq;//主键id
+        String inId = (String) params.get("inBoundIndex");
+        Long inboundIndex= Long.parseLong(inId);//进仓id
         String outDate = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
         BigDecimal cbm = DataUtil.toBigDecimal((String) params.get("cbm"));
-        int pks = DataUtil.toInteger((String)params.get("pks"));
+        int pks = (Integer) params.get("pks");
         String stevedoreID = (String) params.get("stevedoreID");
-        BigDecimal stevedoreMoney = DataUtil.toBigDecimal((String) params.get("stevedoreMoney"));
+        BigDecimal stevedoreMoney = DataUtil.toBigDecimal(String.valueOf(params.get("stevedoreMoney")));
         String driverID = (String) params.get("driverID");
-        BigDecimal driverMoney = DataUtil.toBigDecimal((String) params.get("driverMoney"));
-        String note= (String) params.get("remark");
+        BigDecimal driverMoney = DataUtil.toBigDecimal(String.valueOf(params.get("driverMoney")));
+        String note= (String) params.get("note");
 
+        //查询进仓信息
+        InBound inBound = inBoundMapper.selectByPrimaryKey(inId);
+        if(inBound == null){
+            throw new Exception("进仓信息不存在");
+        }
+        //检查退仓数据
+        if(pks > inBound.getPks()){
+            throw new Exception("退仓件数不能大于进仓件数");
+        }
+        if(cbm.compareTo(inBound.getCbm()) > 0){
+            throw new Exception("退仓立方数不能大于进立方数数");
+        }
+        //检查是否剩余可退
+        Map<String,Object> sumTc = outBoundMapper.sumTc(inboundIndex);
+        int pksHas = ((BigDecimal) sumTc.get("pks")).intValue();
+        BigDecimal cbmHas = (BigDecimal) sumTc.get("cbm");
+        pksHas = pksHas + pks;
+        cbmHas = cbmHas.add(cbm);
+        if(pksHas > inBound.getPks()){
+            throw new Exception("退仓件数不能大于进仓件数");
+        }
+        if(cbmHas.compareTo(inBound.getCbm()) > 0){
+            throw new Exception("退仓立方数不能大于进立方数数");
+        }
+
+        //新增退仓信息
         OutBound outBound = new OutBound();
         outBound.setTid(tid);
         outBound.setId(id);
@@ -86,6 +118,12 @@ public class OutBoundService {
         outBound.setNote(note);
         outBound.setCorpno(corpNo);
         outBoundMapper.insertSelective(outBound);
+
+        //更新进仓状态
+        //todo 全部退完是什么状态？003？
+        inBound.setStatue("002");//部分退仓
+        inBoundMapper.updateByPrimaryKey(inBound);
+
         return RtnData.ok();
     }
 

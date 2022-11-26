@@ -1,5 +1,6 @@
 package com.cc.app.core.controller;
 
+import cn.hutool.log.Log;
 import com.cc.app.base.common.CurrentUser;
 import com.cc.app.base.common.PageModel;
 import com.cc.app.base.common.RtnData;
@@ -36,6 +37,13 @@ public class InBoundController {
         return RtnData.ok(inBound);
     }
 
+    @ApiOperation(value = "查询进仓信息(带字典翻译)",notes = "查询进仓信息(带字典翻译")
+    @GetMapping("/getInfo2")
+    public Object get2(@CurrentUser LoginUser user, @RequestParam Map<String, Object> params){
+        params.put("corpNo",user.getUnitNo());
+        Map inBound = inBoundService.getInfo2(params);
+        return RtnData.ok(inBound);
+    }
 
     /**
      *

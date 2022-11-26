@@ -32,4 +32,6 @@ public interface OutBoundMapper {
     int updateByPrimaryKey(OutBound record);
 
     Page queryPageList(Map<String, Object> params);
+
+    Map<String,Object> sumTc(Long inboundindex);
 }

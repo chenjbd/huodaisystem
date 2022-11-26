@@ -342,4 +342,10 @@
     </if>
     ORDER BY a.outDate desc
   </select>
+  <select id="sumTc" parameterType="java.lang.Long" resultType="java.util.Map">
+    select ifnull(sum(a.pks),0) pks, ifnull(sum(cbm),0) cbm
+    from cec_outboundtbl a
+    where 1=1
+      and a.inBoundIndex = #{inboundindex,jdbcType=BIGINT}
+  </select>
 </mapper>

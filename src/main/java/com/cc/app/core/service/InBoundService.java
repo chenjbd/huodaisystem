@@ -143,4 +143,7 @@ public class InBoundService {
         return RtnData.ok();
     }
 
+    public Map getInfo2(Map<String,Object> params) {
+        return inBoundMapper.getInfo2(params);
+    }
 }

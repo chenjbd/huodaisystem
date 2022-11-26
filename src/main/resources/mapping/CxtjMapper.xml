@@ -115,7 +115,7 @@
     <if test="endDate != null and endDate != ''">
       and a.outDate &lt;= #{endDate,jdbcType=VARCHAR}
     </if>
-    order by a.date desc
+    order by a.outDate desc
   </select>
   <select id="zxqd" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     select a.*,c.customerName, d.driverName

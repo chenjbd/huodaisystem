@@ -398,4 +398,20 @@
     </if>
     ORDER BY a.date desc
   </select>
+  <select id="getInfo2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*, b.customerName, c.driverName, b1.typeName boundName, b2.typeName stevedoreName
+    from cec_inboundtbl a
+           left join cec_customertbl b on a.customerID = b.id
+           left join cec_drivertbl c on a.driverID = c.id
+           left join cec_basictbl b1 on a.boundID = b1.id
+           left join cec_basictbl b2 on a.stevedoreID = b2.id
+    where 1=1
+    and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+    <if test="inboundNo != null and inboundNo != ''">
+      and a.inboundNo = #{inboundNo,jdbcType=VARCHAR}
+    </if>
+    <if test="id != null and id != ''">
+      and a.id = #{id,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

@@ -32,4 +32,6 @@ public interface InBoundMapper {
     int updateByPrimaryKey(InBound record);
 
     Page queryPageList(Map<String, Object> params);
+
+    Map getInfo2(Map<String, Object> params);
 }

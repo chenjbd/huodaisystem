@@ -74,7 +74,7 @@ public class OutBoundController {
         return result;
     }
 
-    @ApiOperation(value = "添加司机信息",notes = "添加司机信息")
+    @ApiOperation(value = "登记退仓信息",notes = "登记退仓信息")
     @PostMapping("/insert")
     public Object insert(@CurrentUser LoginUser user, @RequestBody Map<String,Object> params){
         try {
