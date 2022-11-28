@@ -14,7 +14,7 @@ public interface CxtjMapper {
 
     Page jcgstj(Map<String, Object> params);
 
-    Page tjfytj(Map<String, Object> params);
+    Page tcfytj(Map<String, Object> params);
 
     Page zxqd(Map<String, Object> params);
 }

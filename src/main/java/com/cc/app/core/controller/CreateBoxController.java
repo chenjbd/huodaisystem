@@ -137,4 +137,31 @@ public class CreateBoxController {
         }
     }
 
+    @ApiOperation(value = "箱子运走",notes = "箱子运走")
+    @PostMapping("/take")
+    public Object take(@CurrentUser LoginUser user, @RequestBody Map<String,Object> params){
+        try {
+            params.put("corpNo",user.getUnitNo());
+            createBoxService.take(params);
+            return RtnData.ok();
+        } catch (Exception e) {
+            logger.error("新增公司异常", e);
+            return RtnData.fail(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "查询箱子货物",notes = "查询箱子货物")
+    @GetMapping(value = "/list-zxhw")
+    public Object zxhw(@RequestParam(required = false, defaultValue = "20")int pageSize,
+                       @RequestParam(required = false, defaultValue = "1") int pageIndex,
+                       @CurrentUser LoginUser user,
+                       @RequestParam String id,
+                       @RequestParam Map<String,Object> params
+                      ) {
+        params.put("id", id);//箱子id
+        params.put("corpNo",user.getUnitNo());
+        PageModel result = createBoxService.queryZxhw(params, pageIndex, pageSize);
+        return RtnData.ok(result);
+    }
+
 }

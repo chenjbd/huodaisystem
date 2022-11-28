@@ -410,4 +410,16 @@
     where 1=1
       and a.id = #{id,jdbcType=VARCHAR}
   </select>
+  <select id="queryZxhw" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select t.*, b1.customerName
+    from (select b.*
+          from cec_containertbl a,
+               cec_inboundtbl b
+          where 1 = 1
+            and a.inBoundIndex = b.id
+            and a.sealNum = #{id,jdbcType=VARCHAR}
+            and b.corpNo = #{corpNo,jdbcType=VARCHAR}) t
+    left join cec_customertbl b1 on t.customerID = b1.id
+    order by t.date desc
+  </select>
 </mapper>

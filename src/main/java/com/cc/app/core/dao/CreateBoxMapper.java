@@ -34,4 +34,6 @@ public interface CreateBoxMapper {
     Page queryPageList(Map<String, Object> params);
 
     Map<String,Object> getInfo(String id);
+
+    Page queryZxhw(Map<String, Object> params);
 }

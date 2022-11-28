@@ -93,14 +93,17 @@
     </if>
     order by a.date desc
   </select>
-  <select id="tjfytj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-    select a.*,b.*,c.driverName from cec_outboundtbl a
+  <select id="tcfytj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    select a.*, b.*, c.driverName, d.typeName stevedoreName
+    from cec_outboundtbl a
     left join
-    (select t1.id inId, t1.inboundNo, t1.date, t2.customerName, t3.driverName inDriverName from cec_inboundtbl t1
+    (select t1.id inId, t1.inboundNo, t1.date, t2.customerName, t3.driverName inDriverName, t4.typeName inStevedoreName from cec_inboundtbl t1
     left join cec_customertbl t2 on t1.customerID = t2.id
-    left join cec_drivertbl t3 on t1.driverID = t3.id)
+    left join cec_drivertbl t3 on t1.driverID = t3.id
+    left join cec_basictbl t4 on t1.stevedoreID = t4.id)
     b on a.inBoundIndex = b.inId
     left join cec_drivertbl c on a.driverID = c.id
+    left join cec_basictbl d on a.stevedoreID = d.id
     where 1=1
     and a.corpNo = #{corpNo,jdbcType=VARCHAR}
     <if test="driverID != null and driverID != ''">

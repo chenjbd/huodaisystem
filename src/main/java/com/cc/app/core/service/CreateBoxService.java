@@ -8,10 +8,9 @@ import com.cc.app.base.utils.DataUtil;
 import com.cc.app.base.utils.UUIDGenUtil;
 import com.cc.app.core.dao.ContainerMapper;
 import com.cc.app.core.dao.CreateBoxMapper;
+import com.cc.app.core.dao.DriverCarGoMapper;
 import com.cc.app.core.dao.InBoundMapper;
-import com.cc.app.core.model.Container;
-import com.cc.app.core.model.CreateBox;
-import com.cc.app.core.model.InBound;
+import com.cc.app.core.model.*;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -183,5 +183,58 @@ public class CreateBoxService {
         //更新箱子状态
         createBox.setStatue("002");//已装货
         createBoxMapper.updateByPrimaryKey(createBox);
+    }
+
+    @Autowired
+    private DriverCarGoMapper driverCarGoMapper;
+
+    /**
+     * 箱子运走
+     * @param params
+     * @throws Exception
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void take(Map<String, Object> params) throws Exception {
+        String id = (String) params.get("id");//箱子id
+        Assert.hasText(id, "id不能为空");
+        CreateBox box = createBoxMapper.selectByPrimaryKey(id);
+        Assert.notNull(box, "未查询到箱子信息");
+
+        //更新箱子状态
+        box.setStatue("003");//已出
+        createBoxMapper.updateByPrimaryKey(box);
+
+        //插入运走货物表
+        ContainerExample example = new ContainerExample();
+        example.createCriteria().andSealnumEqualTo(id);
+        List<Container> list = containerMapper.selectByExample(example);
+        for(Container container : list){
+            //更新进仓状态
+            InBound inBound = inBoundMapper.selectByPrimaryKey(String.valueOf(container.getInboundindex()));
+            inBound.setStatue("003");//出库
+            inBoundMapper.updateByPrimaryKey(inBound);
+
+            //插入运走表
+            DriverCarGo driverCarGo = new DriverCarGo();
+            driverCarGo.setTid(inBound.getId());
+            driverCarGo.setId(inBound.getId());
+            driverCarGo.setCustomerid(inBound.getCustomerid());
+            driverCarGo.setDriverid(inBound.getDriverid());
+            driverCarGo.setInboundindex(inBound.getInboundindex());
+            //todo 是否要考虑退仓情况
+            driverCarGo.setCbm(inBound.getCbm());
+            driverCarGo.setPks(inBound.getPks());
+            driverCarGo.setShippingmark(inBound.getShippingmark());
+            driverCarGo.setRemark(inBound.getRemark());
+            driverCarGo.setCorpno(inBound.getCorpno());
+            driverCarGoMapper.insert(driverCarGo);
+        }
+    }
+
+    public PageModel queryZxhw(Map<String, Object> params, int pageIndex, int pageSize) {
+        PageHelper.startPage(pageIndex, pageSize);
+        Page page = createBoxMapper.queryZxhw(params);
+        PageInfo pageInfo = page.toPageInfo();
+        return new PageModel(pageInfo);
     }
 }

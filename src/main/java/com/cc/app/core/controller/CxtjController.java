@@ -154,7 +154,7 @@ public class CxtjController {
                          @RequestParam Map<String,Object> params) {
         params.put("corpNo",user.getUnitNo());
         PageHelper.startPage(pageIndex, pageSize);
-        Page page = mapper.tjfytj(params);
+        Page page = mapper.tcfytj(params);
         PageInfo pageInfo = page.toPageInfo();
         PageModel result =  new PageModel(pageInfo);
         return RtnData.ok(result);
