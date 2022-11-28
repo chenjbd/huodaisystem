@@ -136,4 +136,43 @@
     and a.corpNo = #{corpNo,jdbcType=VARCHAR}
     order by a.inboundNo
   </select>
+  <select id="ndjhtj" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT b.m,COALESCE(SUM(a.cbm),0) AS cbm,COALESCE(SUM(a.pks),0) AS pks,
+           COALESCE(SUM(a1.cbm),0) AS cbm1,COALESCE(SUM(a1.pks),0) AS pks1
+    FROM
+         (
+           SELECT 1 AS m FROM dual
+           union
+           SELECT 2 AS m FROM dual
+           union
+           SELECT 3 AS m FROM dual
+           union
+           SELECT 4 AS m FROM dual
+           union
+           SELECT 5 AS m FROM dual
+           union
+           SELECT 6 AS m FROM dual
+           union
+           SELECT 7 AS m FROM dual
+           union
+           SELECT 8 AS m FROM dual
+           union
+           SELECT 9 AS m FROM dual
+           union
+           SELECT 10 AS m FROM dual
+           union
+           SELECT 11 AS m FROM dual
+           union
+           SELECT 12 AS m FROM dual
+         ) b
+        left join cec_inboundtbl a ON (substring(a.date,6,2)+0)=b.m
+            and left(date,4) = DATE_FORMAT(now(),'%Y')
+            and a.corpNo = #{corpNo,jdbcType=VARCHAR}
+        left join cec_inboundtbl a1 ON (substring(a1.date,6,2)+0)=b.m
+            and left(a1.date,4) = DATE_FORMAT(now(),'%Y')
+            and a1.statue='003'
+            and a1.corpNo = #{corpNo,jdbcType=VARCHAR}
+    where 1=1
+    GROUP BY b.m
+  </select>
 </mapper>

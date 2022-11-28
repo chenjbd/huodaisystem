@@ -2,6 +2,7 @@ package com.cc.app.core.dao;
 
 import com.github.pagehelper.Page;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CxtjMapper {
@@ -17,4 +18,6 @@ public interface CxtjMapper {
     Page tcfytj(Map<String, Object> params);
 
     Page zxqd(Map<String, Object> params);
+
+    List ndjhtj(Map<String, Object> params);
 }

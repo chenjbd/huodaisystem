@@ -233,4 +233,17 @@ public class CxtjController {
         }
     }
 
+    /**
+     * 年度进货统计
+     * @param user
+     * @param params
+     * @return
+     */
+    @GetMapping(value = "/ndjhtj")
+    public Object ndjhtj(@CurrentUser LoginUser user,
+                         @RequestParam Map<String,Object> params) {
+        params.put("corpNo",user.getUnitNo());
+        return RtnData.ok(mapper.ndjhtj(params));
+    }
+
 }
