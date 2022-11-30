@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>hds-api</name>
     <description>货代系管理统API</description>
+    <packaging>war</packaging>
     <properties>
         <java.version>1.8</java.version>
         <activiti-dependencies.version>7.0.56</activiti-dependencies.version>
