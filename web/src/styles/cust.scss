@@ -1,0 +1,13 @@
+.page-container {
+    padding: 15px;
+    background-color: rgb(240, 242, 245);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  
+    .page-panel{
+      background-color: #fff;
+      padding: 20px;
+      box-shadow:0px 0px 18px 6px rgb(2 67 127 / 10%)
+    }
+  }
