@@ -135,20 +135,18 @@ public class OutBoundService {
     public RtnData update(Map<String,Object> params) throws Exception{
         String tid = (String) params.get("tid");
         String corpNo = (String) params.get("corpNo");
-        long id = Long.parseLong((String) params.get("id"));
-        Long inboundIndex= Long.parseLong((String) params.get("inboundIndex"));
+        Long inboundIndex= Long.parseLong((String.valueOf(params.get("inBoundIndex"))));
         String outDate = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
-        BigDecimal cbm = DataUtil.toBigDecimal((String) params.get("cbm"));
-        int pks = DataUtil.toInteger((String)params.get("pks"));
+        BigDecimal cbm = DataUtil.toBigDecimal(String.valueOf(params.get("cbm")));
+        int pks = DataUtil.toInteger(String.valueOf(params.get("pks")));
         String stevedoreID = (String) params.get("stevedoreID");
-        BigDecimal stevedoreMoney = DataUtil.toBigDecimal((String) params.get("stevedoreMoney"));
+        BigDecimal stevedoreMoney = DataUtil.toBigDecimal((String.valueOf(params.get("stevedoreMoney"))));
         String driverID = (String) params.get("driverID");
-        BigDecimal driverMoney = DataUtil.toBigDecimal((String) params.get("driverMoney"));
-        String note= (String) params.get("remark");
+        BigDecimal driverMoney = DataUtil.toBigDecimal((String.valueOf(params.get("driverMoney"))));
+        String note= (String) params.get("note");
 
         OutBound outBound = new OutBound();
         outBound.setTid(tid);
-        outBound.setId(id);
         outBound.setInboundindex(inboundIndex);
         outBound.setOutdate(outDate);
         outBound.setCbm(cbm);

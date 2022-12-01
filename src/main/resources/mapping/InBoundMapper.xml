@@ -371,15 +371,17 @@
   <select id="queryPageList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     select
     a.*,
-    b.driverName,
-    c.customerName
-    from cec_inboundtbl a,cec_drivertbl b,cec_customertbl c
-    where a.corpNo = b.corpNo and a.corpNo=c.corpNo and a.driverID= b.id  and a.customerID= c.id
+    c.driverName,
+    b.customerName
+    from cec_inboundtbl a
+    left join cec_customertbl b on a.customerID = b.id
+    left join cec_drivertbl c on a.driverID = c.id
+    where 1=1
     <if test="driverName != null and driverName != ''">
-      and b.driverName like #{driverName,jdbcType=VARCHAR}
+      and c.driverName like #{driverName,jdbcType=VARCHAR}
     </if>
     <if test="customerName != null and customerName != ''">
-      and c.customerName like #{customerName,jdbcType=VARCHAR}
+      and b.customerName like #{customerName,jdbcType=VARCHAR}
     </if>
     <if test="startDate != null and startDate != ''">
       and a.date >= #{startDate,jdbcType=VARCHAR}

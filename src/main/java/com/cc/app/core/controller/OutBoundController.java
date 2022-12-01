@@ -1,5 +1,6 @@
 package com.cc.app.core.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.app.base.common.CurrentUser;
 import com.cc.app.base.common.PageModel;
 import com.cc.app.base.common.RtnData;
@@ -45,33 +46,19 @@ public class OutBoundController {
      * @param stevedoreID
      * @return
      */
-    @ApiOperation(value = "分页查询档案信息",notes = "分页查询档案信息")
+    @ApiOperation(value = "退仓管理查询",notes = "退仓管理查询")
     @GetMapping(value = "/list")
     public Object list(@RequestParam(required = false, defaultValue = "20")int pageSize,
                        @RequestParam(required = false, defaultValue = "1") int pageIndex,
                        @CurrentUser LoginUser user,
-                       @RequestParam(required = false, name = "driverID")String driverID,
-                       @RequestParam(required = false, name = "stevedoreID")String stevedoreID,
-                       @RequestParam(required = false, name = "startDate")String startDate,
-                       @RequestParam(required = false, name = "endDate")String endDate,
-                       @RequestParam(required = false, name = "statue")String statue,
-                       @RequestParam(required = false, name = "boxStatue")String boxStatue) {
-        Map<String, Object> params = new HashMap<>();
-        if (StringUtils.isNotBlank(driverID)) {
-            params.put("driverID",  driverID );
-        }
-        if (StringUtils.isNotBlank(stevedoreID)) {
-            params.put("stevedoreID", stevedoreID);
-        }
-        if (StringUtils.isNotBlank(startDate)) {
-            params.put("startDate", startDate );
-        }
-        if (StringUtils.isNotBlank(endDate)) {
-            params.put("endDate", endDate);
+                       @RequestParam Map<String,Object> params) {
+        String customerName = (String) params.get("customerName");
+        if(StrUtil.isNotBlank(customerName)){
+            params.put("customerName", "%" + customerName + "%");
         }
         params.put("corpNo",user.getUnitNo());
         PageModel result = outBoundService.queryPageList(params, pageIndex, pageSize);
-        return result;
+        return RtnData.ok(result);
     }
 
     @ApiOperation(value = "登记退仓信息",notes = "登记退仓信息")

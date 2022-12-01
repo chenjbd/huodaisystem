@@ -1,5 +1,6 @@
 package com.cc.app.core.service;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.app.base.common.PageModel;
 import com.cc.app.base.common.RtnData;
 import com.cc.app.base.service.SeqService;
@@ -65,7 +66,11 @@ public class InBoundService {
         String customerID= (String) params.get("customerID");
         String inboundno= (String) params.get("inboundNo");
         BigDecimal cbm = DataUtil.toBigDecimal((String) params.get("cbm"));
-        int pks = (Integer) params.get("pks");
+        String intStr = String.valueOf(params.get("pks"));
+        int pks = 0;
+        if(StrUtil.isNotBlank(intStr)){
+            pks = Integer.parseInt(intStr);
+        }
         String shippingMark= (String) params.get("shippingMark");
         String driverID = (String) params.get("driverID");
         String date = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
@@ -101,11 +106,15 @@ public class InBoundService {
     public RtnData update(Map<String,Object> params) throws Exception{
         String id = (String) params.get("id");
         String corpNo = (String) params.get("corpNo");
-        Long inboundIndex= Long.parseLong((String) params.get("inboundIndex"));
+
         String customerID= (String) params.get("customerID");
         String inboundno= (String) params.get("inboundNo");
-        BigDecimal cbm = DataUtil.toBigDecimal((String) params.get("cbm"));
-        int pks = DataUtil.toInteger((String)params.get("pks"));
+        BigDecimal cbm = DataUtil.toBigDecimal(String.valueOf(params.get("cbm")));
+        String intStr = String.valueOf(params.get("pks"));
+        int pks = 0;
+        if(StrUtil.isNotBlank(intStr)){
+            pks = Integer.parseInt(intStr);
+        }
         String shippingMark= (String) params.get("shippingMark");
         String driverID = (String) params.get("driverID");
         String date = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
@@ -121,7 +130,6 @@ public class InBoundService {
         inBound.setDate(date);
         inBound.setStatue(statue);
         inBound.setCustomerid(customerID);
-        inBound.setInboundindex(inboundIndex);
         inBound.setCbm(cbm);
         inBound.setPks(pks);
         inBound.setShippingmark(shippingMark);
@@ -138,7 +146,7 @@ public class InBoundService {
      * @throws Exception
      */
     public RtnData delete(Map<String,Object> params) throws Exception{
-        String tid = (String) params.get("tid");
+        String tid = (String) params.get("id");
         inBoundMapper.deleteByPrimaryKey(tid);
         return RtnData.ok();
     }

@@ -1,6 +1,7 @@
 package com.cc.app.core.service;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.cc.app.base.common.PageModel;
 import com.cc.app.base.common.RtnData;
 import com.cc.app.base.service.SeqService;
@@ -70,7 +71,11 @@ public class CreateBoxService {
         String areaId = (String) params.get("areaID");
         String containerDate = (String) params.get("containerDate");
         String stevedoreId = (String) params.get("stevedoreID");
-        int cost= (Integer) params.get("cost");
+        String costStr = String.valueOf(params.get("cost"));
+        int cost = 0;
+        if(StrUtil.isNotBlank(costStr)){
+            cost = Integer.parseInt(costStr);
+        }
         BigDecimal cubicnum = DataUtil.toBigDecimal((String) params.get("cubicNum"));
         String notes = (String) params.get("notes");
         String stevedoreNotes = (String) params.get("stevedoreNotes");
@@ -104,7 +109,7 @@ public class CreateBoxService {
      * @throws Exception
      */
     public RtnData update(Map<String,Object> params) throws Exception{
-        String id = UUIDGenUtil.uuid();
+        String id = (String) params.get("id");
         String corpNo = (String) params.get("corpNo");
         String sealNum = (String) params.get("sealNum");
         String containerNo = (String) params.get("containerNo");
@@ -113,12 +118,16 @@ public class CreateBoxService {
         String areaId = (String) params.get("areaId");
         String containerDate = (String) params.get("containerDate");
         String stevedoreId = (String) params.get("stevedoreId");
-        int cost= Integer.parseInt((String) params.get("cost"));
-        BigDecimal cubicnum = DataUtil.toBigDecimal((String) params.get("cubicNum"));
+        String costStr = String.valueOf(params.get("cost"));
+        int cost = 0;
+        if(StrUtil.isNotBlank(costStr)){
+            cost = Integer.parseInt(costStr);
+        }
+        BigDecimal cubicnum = DataUtil.toBigDecimal(String.valueOf(params.get("cubicNum")));
         String statue = (String) params.get("statue");
         String notes = (String) params.get("notes");
         String stevedoreNotes = (String) params.get("stevedoreNotes");
-        BigDecimal supervisedcbm = DataUtil.toBigDecimal((String) params.get("supervisedcbm"));
+        BigDecimal supervisedcbm = DataUtil.toBigDecimal(String.valueOf(params.get("supervisedCbm")));
 
         CreateBox createBox = new CreateBox();
         createBox.setId(id);

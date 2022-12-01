@@ -55,7 +55,7 @@ public class DataUtil {
             BigDecimal decimal = new BigDecimal(str);
             return decimal;
         }catch (Exception e){
-            return null;
+            return BigDecimal.ZERO;
         }
     }
 
@@ -64,7 +64,7 @@ public class DataUtil {
             Integer i = Integer.parseInt(str);
             return i;
         }catch (Exception e){
-            return null;
+            return 0;
         }
     }
 }
