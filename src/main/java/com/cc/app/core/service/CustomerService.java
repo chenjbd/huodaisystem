@@ -59,7 +59,7 @@ public class CustomerService {
         String note= (String) params.get("note");
         String tel= (String) params.get("tel");
         String idSeq = seqService.getSeqNo("seq_cec_customerbl");
-        String id = corpNo = idSeq;
+        String id = corpNo + idSeq;
         Customer customer = new Customer();
         customer.setId(id);
         customer.setCorpno(corpNo);
