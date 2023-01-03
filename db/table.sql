@@ -93,7 +93,7 @@ CREATE TABLE `cec_drivercargotbl` (
 DROP TABLE IF EXISTS `cec_drivertbl`;
 CREATE TABLE `cec_drivertbl` (
                                  `id` varchar(32) NOT NULL COMMENT '主键',
-                                 `driverID` varchar(8) NOT NULL COMMENT '司机ID',
+                                 `driverID` varchar(10) NOT NULL COMMENT '司机ID',
                                  `driverName` varchar(10) NOT NULL COMMENT '司机名字',
                                  `tel` varchar(13) DEFAULT NULL COMMENT '司机联系电话',
                                  `note` varchar(200) DEFAULT NULL COMMENT '说明',
@@ -114,7 +114,7 @@ CREATE TABLE `cec_inboundtbl` (
                                   `cbm` decimal(12,2) NOT NULL COMMENT '立方数',
                                   `pks` int(11) NOT NULL COMMENT '件数',
                                   `shippingMark` varchar(20) DEFAULT NULL COMMENT '唛头',
-                                  `driverID` varchar(8) DEFAULT NULL COMMENT '司机',
+                                  `driverID` varchar(10) DEFAULT NULL COMMENT '司机',
                                   `date` varchar(10) NOT NULL COMMENT '进仓日期',
                                   `statue` varchar(3) NOT NULL COMMENT '状态 001：在库 002：部分退仓 003：出库',
                                   `remark` varchar(1000) DEFAULT NULL COMMENT '备注',
@@ -150,7 +150,7 @@ DROP TABLE IF EXISTS `seq_cec_customerbl`;
 CREATE TABLE `seq_cec_customerbl` (
                                       `SEQ` int(6) NOT NULL AUTO_INCREMENT,
                                       PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8 COMMENT='公司序列号';
+) ENGINE=InnoDB AUTO_INCREMENT=2000 DEFAULT CHARSET=utf8 COMMENT='公司序列号';
 
 -- 司机序列号
 DROP TABLE IF EXISTS `seq_cec_driverbl`;
@@ -179,3 +179,6 @@ CREATE TABLE `seq_cec_createboxbl` (
                                        `SEQ` int(6) NOT NULL AUTO_INCREMENT,
                                        PRIMARY KEY (`SEQ`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100000 DEFAULT CHARSET=utf8 COMMENT='箱号';
+
+
+ALTER TABLE `seq_cec_customerbl` AUTO_INCREMENT=2000;
