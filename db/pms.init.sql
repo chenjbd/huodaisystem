@@ -205,7 +205,7 @@ INSERT INTO `cc_pms_res_info` VALUES ('100100', 'sysmgr', '系统管理', '/sys'
 INSERT INTO `cc_pms_res_info` VALUES ('10010010', 'acc', '账户管理', 'acc', null, 'sysmgr', '1', 'user', 'sys', 'sys/acc', '1', null, null);
 INSERT INTO `cc_pms_res_info` VALUES ('10010011', 'role', '角色管理', 'role', null, 'sysmgr', '2', 'list', 'sys', 'sys/role', '1', null, null);
 INSERT INTO `cc_pms_res_info` VALUES ('10010012', 'org', '机构管理', 'org', null, 'sysmgr', '3', 'tree', 'sys', 'sys/org', '1', null, null);
-INSERT INTO `cc_pms_res_info` VALUES ('10010013', 'person', '人员管理', 'person', null, 'sysmgr', '4', 'peoples', 'sys', 'sys/person', '1', null, null);
+-- INSERT INTO `cc_pms_res_info` VALUES ('10010013', 'person', '人员管理', 'person', null, 'sysmgr', '4', 'peoples', 'sys', 'sys/person', '1', null, null);
 INSERT INTO `cc_pms_res_info` VALUES ('100200', 'jcsj', '基础数据', '/basic', null, '0', '8', 'el-icon-setting', 'sys', '#', '1', '/basic/sjxx', null);
 INSERT INTO `cc_pms_res_info` VALUES ('10020010', 'sjxx', '司机管理', 'sjxx', null, 'jcsj', '1', 'el-icon-truck', 'sys', 'basic/sjxx', '1', null, null);
 INSERT INTO `cc_pms_res_info` VALUES ('10020011', 'gsxx', '公司管理', 'gsxx', null, 'jcsj', '2', 'el-icon-house', 'sys', 'basic/gsxx', '1', null, null);
@@ -219,11 +219,11 @@ INSERT INTO `cc_pms_res_info` VALUES ('10030014', 'sjlhtj', '司机拉货统计'
 INSERT INTO `cc_pms_res_info` VALUES ('10030015', 'zxgzhtj', '装卸工装货统计', 'zxgzhtj', null, 'oltp', '6', 'excel', 'sys', 'oltp/zxgzhtj', '1', null, null);
 INSERT INTO `cc_pms_res_info` VALUES ('10030016', 'jcgstj', '进仓公司统计', 'jcgstj', null, 'oltp', '7', 'excel', 'sys', 'oltp/jcgstj', '1', null, null);
 INSERT INTO `cc_pms_res_info` VALUES ('10030017', 'tcfytj', '退仓费用统计', 'tcfytj', null, 'oltp', '8', 'excel', 'sys', 'oltp/tcfytj', '1', null, null);
-
+commit;
 -- 初始化角色
 INSERT INTO `cc_pms_role_info` VALUES ('0', '0', '管理员', '系统管理');
 INSERT INTO `cc_pms_role_info` VALUES ('f47108ae6fb14b16b5c6a34d413b6c85', '101', '业务员权限', '业务处理、基础数据');
-
+commit;
 -- 初始化角色权限
 INSERT INTO `cc_pms_role_res` VALUES ('39cb5f0b1acd4689a30a28ca04a56bc9', '0', '100100');
 INSERT INTO `cc_pms_role_res` VALUES ('c0ae55e4e5d34e6d952a13b810d082c5', '0', '10010010');
@@ -243,12 +243,13 @@ INSERT INTO `cc_pms_role_res` VALUES ('cbbfb95efe0f4166809703e2ad71b7ee', 'f4710
 INSERT INTO `cc_pms_role_res` VALUES ('d1d0214b9da64480a3fa5d8d455183f6', 'f47108ae6fb14b16b5c6a34d413b6c85', '10030013');
 INSERT INTO `cc_pms_role_res` VALUES ('da8a337bed56436a840500eae8be11d1', 'f47108ae6fb14b16b5c6a34d413b6c85', '10030012');
 INSERT INTO `cc_pms_role_res` VALUES ('e5a901298c7841a382b57bafb3901268', 'f47108ae6fb14b16b5c6a34d413b6c85', '10020012');
-
---初始化用户
+commit;
+-- 初始化用户
 insert into CC_PMS_ACCOUNT_INFO (acc_id, acc_name, acc_pwd, name, phone, job, remark, acc_role, status, lst_time, unit_no, ks, addr, email, open_id, union_id)
-values ('1', 'superAdmin', '670b14728ad9902aecba32e22fa4f6bd', '超级管理员', '1234567890123', null, null, 'admin', '1', null, '1', null, null, null, null, null);
-
+values ('1', 'admin', '670b14728ad9902aecba32e22fa4f6bd', '超级管理员', '1234567890123', null, null, 'admin', '1', null, '1', null, null, null, null, null);
+commit;
 -- 初始化机构信息
 INSERT INTO `cc_pms_org_info` VALUES ('1001', '中川货代', '1001', null, null, null, null, null, '', '', null, null, null, null, null, null, null, '0', null, '1', null, 'admin', '2022-11-24', '1');
 INSERT INTO `cc_pms_org_info` VALUES ('1002', '中井货代', '1002', null, null, null, null, null, '', '', null, null, null, null, null, null, null, '0', null, '1', null, 'admin', '2022-11-24', '1');
 INSERT INTO `cc_pms_org_info` VALUES ('1003', '泛成货代', '1003', null, null, null, null, null, '', '', null, null, null, null, null, null, null, '0', null, '1', null, 'admin', '2022-11-24', '1');
+commit;

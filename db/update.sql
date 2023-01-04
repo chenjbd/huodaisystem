@@ -1,0 +1,1 @@
+UPDATE cec_basictbl set id = concat(corpNo,bigTypeID,litTypeID);
