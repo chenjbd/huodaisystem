@@ -412,7 +412,7 @@
   </select>
   <select id="queryZxhw" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     select t.*, b1.customerName
-    from (select b.*
+    from (select b.*,a.id cid
           from cec_containertbl a,
                cec_inboundtbl b
           where 1 = 1

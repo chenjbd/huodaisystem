@@ -194,6 +194,46 @@ public class CreateBoxService {
         createBoxMapper.updateByPrimaryKey(createBox);
     }
 
+    /**
+     * 货物退箱
+     * @param params
+     * @throws Exception
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void tx(Map<String, Object> params) throws Exception {
+        String cid = (String) params.get("cid");//装箱id
+        Assert.hasText(cid, "cid can't null");
+        String corpNo = (String) params.get("corpNo");
+        Assert.hasText(corpNo, "corpNo can't null");
+
+        Container container = containerMapper.selectByPrimaryKey(cid);
+        if(container == null){
+            throw new Exception("id is not exist");
+        }
+        //删除装箱记录
+        containerMapper.deleteByPrimaryKey(cid);
+
+        //更新货物状态
+        InBound inBound = new InBound();
+        inBound.setId(container.getInboundindex() + "");
+        inBound.setBoxstatue("1");//未装箱
+        inBoundMapper.updateByPrimaryKeySelective(inBound);
+
+        //查询箱子是否有货物
+        params.clear();
+        params.put("id", container.getSealnum());
+        params.put("corpNo", corpNo);
+        List list = createBoxMapper.queryZxhw(params);
+        if(list == null || list.size() < 1){
+            //没有货物，则是空箱
+            CreateBox createBox = new CreateBox();
+            createBox.setId(container.getSealnum());
+            createBox.setStatue("001");//空箱
+            createBoxMapper.updateByPrimaryKeySelective(createBox);
+        }
+    }
+
+
     @Autowired
     private DriverCarGoMapper driverCarGoMapper;
 
