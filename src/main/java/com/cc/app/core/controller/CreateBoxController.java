@@ -137,6 +137,19 @@ public class CreateBoxController {
         }
     }
 
+    @ApiOperation(value = "货物退箱",notes = "货物退箱")
+    @PostMapping("/tx")
+    public Object tx(@CurrentUser LoginUser user, @RequestBody Map<String,Object> params){
+        try {
+            params.put("corpNo",user.getUnitNo());
+            createBoxService.tx(params);
+            return RtnData.ok();
+        } catch (Exception e) {
+            logger.error("新增公司异常", e);
+            return RtnData.fail(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "箱子运走",notes = "箱子运走")
     @PostMapping("/take")
     public Object take(@CurrentUser LoginUser user, @RequestBody Map<String,Object> params){
