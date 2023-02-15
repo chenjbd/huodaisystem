@@ -382,9 +382,14 @@
     <if test="containerDate != null and containerDate != ''">
       and containerDate = #{containerDate,jdbcType=VARCHAR}
     </if>
-    <if test="statue != null and statue != ''">
+    <choose >
+    <when test="statue != null and statue != ''">
       and statue = #{statue,jdbcType=VARCHAR}
-    </if>
+    </when>
+    <when test="statue == null or statue = ''">
+      and statue in ('001','002')
+    </when>
+    </choose>
     <if test="containerNo != null and containerNo != ''">
       and containerNo = #{containerNo,jdbcType=VARCHAR}
     </if>
@@ -400,7 +405,7 @@
     <if test="corpNo != null and corpNo != ''">
       and corpNo = #{corpNo,jdbcType=VARCHAR}
     </if>
-    order by containerDate desc
+    order by statue,containerDate asc
   </select>
   <select id="getInfo" parameterType="java.lang.String" resultType="java.util.HashMap">
     select a.*, b.typeName boxTypeName, c.typeName areaName from
@@ -412,7 +417,7 @@
   </select>
   <select id="queryZxhw" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     select t.*, b1.customerName
-    from (select b.*
+    from (select b.*,a.id cid
           from cec_containertbl a,
                cec_inboundtbl b
           where 1 = 1
